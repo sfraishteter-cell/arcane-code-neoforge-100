@@ -12,6 +12,14 @@ java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
 repositories { mavenCentral() }
 
+tasks.named('processResources', ProcessResources).configure {
+    def replaceProperties = [mod_version: mod_version]
+    inputs.properties replaceProperties
+    filesMatching('META-INF/neoforge.mods.toml') {
+        expand replaceProperties
+    }
+}
+
 neoForge {
     version = neo_version
     runs {
