@@ -1,4 +1,4 @@
-# Arcane Code 1.0.0 — Release Candidate
+# Arcane Code 1.0.0-dev — The Grand Weave
 
 Geometric programmable magic for Minecraft 1.21.1 and NeoForge 21.1.238+.
 
@@ -23,6 +23,15 @@ Geometric programmable magic for Minecraft 1.21.1 and NeoForge 21.1.238+.
 - Hold the Resonance Mill in one hand and an iron ingot or amethyst shard in the other; right-click to grind it.
 
 ## Build
-The included GitHub Actions workflow builds with Java 21, Gradle 8.10.2 and NeoForge ModDevGradle. The production JAR appears as an Actions artifact only after a successful build.
+
+Use Java 21 and the checked-in Gradle Wrapper:
+
+```text
+./gradlew clean build verifyReleaseJar
+```
+
+The current artifact is `Arcane-Code-NeoForge-1.21.1-1.0.0-dev.jar`. The project remains a development build until every release criterion is verified. GitHub Actions also performs a dedicated-server smoke test without Create.
+
+The code contains 142 core rune handlers, but gameplay coverage is not complete. See `docs/CURRENT_STATE_AUDIT_RU.md` for verified behavior and known limitations.
 
 See `UPLOAD_AND_BUILD_RU.md`, `TEST_CHECKLIST_RU.md` and `RELEASE_STATUS_RU.md`.
