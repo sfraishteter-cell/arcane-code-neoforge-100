@@ -45,11 +45,74 @@ tasks.named('jar', Jar).configure {
     }
 }
 
+def requiredItemIds = [
+    'iron_dust', 'amethyst_dust', 'arcane_dust', 'resonance_mill',
+    'arcane_codex', 'spark_staff', 'resonance_staff', 'architect_staff',
+    'sovereign_staff', 'rune_scroll', 'focus_prism', 'woven_artifact'
+]
+
+tasks.register('verifyResources') {
+    group = 'verification'
+    description = 'Validates JSON resources, localizations, item models and optional Create recipe guards.'
+    inputs.dir layout.projectDirectory.dir('src/main/resources')
+    doLast {
+        def resources = file('src/main/resources')
+        def parser = new groovy.json.JsonSlurper()
+
+        fileTree(resources) {
+            include '**/*.json', 'pack.mcmeta'
+        }.files.each { resource ->
+            try {
+                parser.parse(resource)
+            } catch (Exception exception) {
+                throw new GradleException("Invalid JSON resource: ${project.relativePath(resource)}", exception)
+            }
+        }
+
+        def englishFile = file('src/main/resources/assets/arcanecode/lang/en_us.json')
+        def russianFile = file('src/main/resources/assets/arcanecode/lang/ru_ru.json')
+        def english = new groovy.json.JsonSlurper().parseText(englishFile.getText('UTF-8')) as Map
+        def russian = new groovy.json.JsonSlurper().parseText(russianFile.getText('UTF-8')) as Map
+        requiredItemIds.each { id ->
+            def key = "item.arcanecode.${id}".toString()
+            if (!english.containsKey(key)) throw new GradleException("Missing English localization: ${key}")
+            if (!russian.containsKey(key)) throw new GradleException("Missing Russian localization: ${key}")
+
+            def model = file("src/main/resources/assets/arcanecode/models/item/${id}.json")
+            if (!model.isFile()) throw new GradleException("Missing item model: ${project.relativePath(model)}")
+            def modelJson = parser.parse(model) as Map
+            def layer = (modelJson.textures as Map)?.layer0
+            if (layer instanceof String && layer.startsWith('arcanecode:item/')) {
+                def textureName = layer.substring('arcanecode:item/'.length())
+                def texture = file("src/main/resources/assets/arcanecode/textures/item/${textureName}.png")
+                if (!texture.isFile()) throw new GradleException("Missing item texture: ${project.relativePath(texture)}")
+            }
+        }
+
+        fileTree('src/main/resources/data/create/recipe/arcanecode') {
+            include '*.json'
+        }.files.each { recipe ->
+            def recipeJson = parser.parse(recipe) as Map
+            def conditions = recipeJson['neoforge:conditions'] as List
+            def guarded = conditions?.any { condition ->
+                condition.type == 'neoforge:mod_loaded' && condition.modid == 'create'
+            }
+            if (!guarded) throw new GradleException("Create recipe lacks a mod_loaded guard: ${project.relativePath(recipe)}")
+        }
+    }
+}
+
 tasks.register('verifyReleaseJar') {
-    dependsOn tasks.named('jar')
+    group = 'verification'
+    description = 'Checks the distributable JAR name, metadata, classes and resources.'
+    dependsOn tasks.named('jar'), tasks.named('verifyResources')
     doLast {
         def jarFile = tasks.named('jar').get().archiveFile.get().asFile
         if (!jarFile.exists()) throw new GradleException("Release JAR was not created: ${jarFile}")
+        def expectedName = "Arcane-Code-NeoForge-${minecraft_version}-${mod_version}.jar"
+        if (jarFile.name != expectedName) {
+            throw new GradleException("Unexpected JAR name: ${jarFile.name}; expected ${expectedName}")
+        }
         def zip = new java.util.zip.ZipFile(jarFile)
         try {
             [
@@ -68,10 +131,18 @@ tasks.register('verifyReleaseJar') {
             ].each { entry ->
                 if (zip.getEntry(entry) == null) throw new GradleException("Missing JAR entry: ${entry}")
             }
+            def modsToml = zip.getInputStream(zip.getEntry('META-INF/neoforge.mods.toml')).getText('UTF-8')
+            if (!modsToml.contains("version=\"${mod_version}\"")) {
+                throw new GradleException("neoforge.mods.toml does not contain version ${mod_version}")
+            }
+            if (modsToml.contains('${mod_version}')) {
+                throw new GradleException('neoforge.mods.toml still contains an unexpanded version placeholder')
+            }
         } finally { zip.close() }
         println "Verified release JAR: ${jarFile}"
     }
 }
 
+tasks.named('check').configure { dependsOn tasks.named('verifyResources') }
 tasks.named('build').configure { finalizedBy tasks.named('verifyReleaseJar') }
 tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8' }
