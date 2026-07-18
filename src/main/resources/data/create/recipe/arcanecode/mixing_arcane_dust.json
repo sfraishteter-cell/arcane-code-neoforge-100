@@ -1,0 +1,8 @@
+{
+  "type": "create:mixing",
+  "ingredients": [
+    {"item": "arcanecode:iron_dust"},
+    {"item": "arcanecode:amethyst_dust"}
+  ],
+  "results": [{"id": "arcanecode:arcane_dust", "count": 3}]
+}

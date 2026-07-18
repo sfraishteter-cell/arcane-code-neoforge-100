@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["ADA", "DGD", "ADA"],
+  "key": {
+    "A": {"item": "minecraft:amethyst_shard"},
+    "D": {"item": "arcanecode:arcane_dust"},
+    "G": {"item": "minecraft:glass"}
+  },
+  "result": {"id": "arcanecode:focus_prism", "count": 1}
+}

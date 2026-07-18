@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {"item": "arcanecode:iron_dust"},
+    {"item": "arcanecode:amethyst_dust"}
+  ],
+  "result": {"id": "arcanecode:arcane_dust", "count": 2}
+}

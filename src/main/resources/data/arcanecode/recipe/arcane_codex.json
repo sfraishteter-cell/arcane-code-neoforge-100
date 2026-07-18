@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["APA", "BDB", "AGA"],
+  "key": {
+    "A": {"item": "minecraft:amethyst_shard"},
+    "P": {"item": "minecraft:paper"},
+    "B": {"item": "minecraft:book"},
+    "D": {"item": "arcanecode:arcane_dust"},
+    "G": {"item": "minecraft:gold_ingot"}
+  },
+  "result": {"id": "arcanecode:arcane_codex", "count": 1}
+}

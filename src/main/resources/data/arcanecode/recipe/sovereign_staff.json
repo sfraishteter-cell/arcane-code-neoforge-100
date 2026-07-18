@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " BQ",
+    " DA",
+    "H  "
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:beacon"
+    },
+    "Q": {
+      "item": "minecraft:dragon_breath"
+    },
+    "D": {
+      "item": "arcanecode:arcane_dust"
+    },
+    "A": {
+      "item": "arcanecode:architect_staff"
+    },
+    "H": {
+      "item": "minecraft:netherite_ingot"
+    }
+  },
+  "result": {
+    "id": "arcanecode:sovereign_staff",
+    "count": 1
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "type": "create:milling",
+  "ingredients": [{"item": "minecraft:amethyst_shard"}],
+  "processingTime": 100,
+  "results": [{"id": "arcanecode:amethyst_dust", "count": 2}]
+}

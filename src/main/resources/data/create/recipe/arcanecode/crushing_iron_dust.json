@@ -1,0 +1,9 @@
+{
+  "type": "create:crushing",
+  "ingredients": [{"item": "minecraft:iron_ingot"}],
+  "processingTime": 80,
+  "results": [
+    {"id": "arcanecode:iron_dust", "count": 4},
+    {"id": "arcanecode:iron_dust", "count": 1, "chance": 0.25}
+  ]
+}

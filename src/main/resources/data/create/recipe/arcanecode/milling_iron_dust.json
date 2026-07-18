@@ -1,0 +1,6 @@
+{
+  "type": "create:milling",
+  "ingredients": [{"item": "minecraft:iron_ingot"}],
+  "processingTime": 120,
+  "results": [{"id": "arcanecode:iron_dust", "count": 3}]
+}

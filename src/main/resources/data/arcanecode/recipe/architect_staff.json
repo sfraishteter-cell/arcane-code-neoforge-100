@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " NP",
+    " DR",
+    "H  "
+  ],
+  "key": {
+    "N": {
+      "item": "minecraft:nether_star"
+    },
+    "P": {
+      "item": "minecraft:ender_pearl"
+    },
+    "D": {
+      "item": "arcanecode:arcane_dust"
+    },
+    "R": {
+      "item": "arcanecode:resonance_staff"
+    },
+    "H": {
+      "item": "minecraft:end_rod"
+    }
+  },
+  "result": {
+    "id": "arcanecode:architect_staff",
+    "count": 1
+  }
+}

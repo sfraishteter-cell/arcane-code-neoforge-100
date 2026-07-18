@@ -1,0 +1,69 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+    id 'net.neoforged.moddev' version '2.0.141'
+}
+
+version = mod_version
+group = mod_group_id
+
+base { archivesName = "Arcane-Code-NeoForge-${minecraft_version}" }
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+
+repositories { mavenCentral() }
+
+neoForge {
+    version = neo_version
+    runs {
+        client { client(); systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id }
+        server { server(); programArgument '--nogui'; systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id }
+        configureEach {
+            systemProperty 'forge.logging.markers', 'REGISTRIES'
+            logLevel = org.slf4j.event.Level.DEBUG
+        }
+    }
+    mods { "${mod_id}" { sourceSet(sourceSets.main) } }
+}
+
+tasks.named('jar', Jar).configure {
+    manifest {
+        attributes(
+            'FMLModType': 'MOD',
+            'Automatic-Module-Name': 'dev.sergey.arcanecode',
+            'Implementation-Title': 'Arcane Code',
+            'Implementation-Version': mod_version,
+            'Implementation-Vendor': 'Sergey Freishteter'
+        )
+    }
+}
+
+tasks.register('verifyReleaseJar') {
+    dependsOn tasks.named('jar')
+    doLast {
+        def jarFile = tasks.named('jar').get().archiveFile.get().asFile
+        if (!jarFile.exists()) throw new GradleException("Release JAR was not created: ${jarFile}")
+        def zip = new java.util.zip.ZipFile(jarFile)
+        try {
+            [
+                'META-INF/neoforge.mods.toml',
+                'dev/sergey/arcanecode/ArcaneCode.class',
+                'dev/sergey/arcanecode/client/RuneCastingScreen.class',
+                'dev/sergey/arcanecode/client/ArcaneCodexScreen.class',
+                'dev/sergey/arcanecode/item/ResonanceMillItem.class',
+                'dev/sergey/arcanecode/spell/RuneEngine.class',
+                'dev/sergey/arcanecode/network/RuneProgramPayload.class',
+                'assets/arcanecode/lang/ru_ru.json',
+                'assets/arcanecode/textures/item/sovereign_staff.png',
+                'assets/arcanecode/textures/item/resonance_mill.png',
+                'data/arcanecode/recipe/resonance_mill.json',
+                'data/create/recipe/arcanecode/mixing_arcane_dust.json'
+            ].each { entry ->
+                if (zip.getEntry(entry) == null) throw new GradleException("Missing JAR entry: ${entry}")
+            }
+        } finally { zip.close() }
+        println "Verified release JAR: ${jarFile}"
+    }
+}
+
+tasks.named('build').configure { finalizedBy tasks.named('verifyReleaseJar') }
+tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8' }

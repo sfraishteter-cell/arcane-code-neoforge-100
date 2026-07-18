@@ -1,0 +1,34 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="MIT"
+
+[[mods]]
+modId="arcanecode"
+version="1.0.0"
+displayName="Arcane Code"
+logoFile="icon.png"
+authors="Sergey Freishteter"
+description='''
+Geometric programmable magic for Minecraft 1.21.1. Draw rotation-invariant runes, compose typed stack programs, consume Arcane Dust, create visual constructs and physical temporary barriers, and learn everything through an interactive codex.
+'''
+
+[[dependencies.arcanecode]]
+modId="neoforge"
+type="required"
+versionRange="[21.1.238,)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.arcanecode]]
+modId="minecraft"
+type="required"
+versionRange="[1.21.1,1.21.2)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.arcanecode]]
+modId="create"
+type="optional"
+versionRange="[6.0.0,)"
+ordering="AFTER"
+side="BOTH"

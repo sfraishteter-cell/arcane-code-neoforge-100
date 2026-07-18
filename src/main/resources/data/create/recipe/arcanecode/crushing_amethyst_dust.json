@@ -1,0 +1,9 @@
+{
+  "type": "create:crushing",
+  "ingredients": [{"item": "minecraft:amethyst_shard"}],
+  "processingTime": 60,
+  "results": [
+    {"id": "arcanecode:amethyst_dust", "count": 3},
+    {"id": "arcanecode:amethyst_dust", "count": 1, "chance": 0.20}
+  ]
+}

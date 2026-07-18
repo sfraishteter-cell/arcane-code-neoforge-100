@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {"item": "minecraft:paper"},
+    {"item": "minecraft:glow_ink_sac"},
+    {"item": "arcanecode:arcane_dust"}
+  ],
+  "result": {"id": "arcanecode:rune_scroll", "count": 2}
+}

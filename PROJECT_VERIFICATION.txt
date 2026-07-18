@@ -1,0 +1,17 @@
+ARCANE CODE 1.0.0 RELEASE CANDIDATE
+
+Local structural validation: PASSED
+Core runes: 142
+Java sources: 25
+JSON resources: 32
+PNG resources: 14
+Bare javac status without Minecraft/NeoForge classpath: 1 (dependency errors expected)
+Syntax-pattern scan: PASSED
+JSON parsing: PASSED
+PNG validation: PASSED
+Rune RU/EN localization coverage: PASSED
+
+Not yet completed:
+- real NeoForge Gradle compilation;
+- client and dedicated-server playtest;
+- Create runtime recipe test.

@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["SIS", "ACA", "SIS"],
+  "key": {
+    "S": {"item": "minecraft:stone"},
+    "I": {"item": "minecraft:iron_ingot"},
+    "A": {"item": "minecraft:amethyst_shard"},
+    "C": {"item": "minecraft:copper_ingot"}
+  },
+  "result": {"id": "arcanecode:resonance_mill", "count": 1}
+}

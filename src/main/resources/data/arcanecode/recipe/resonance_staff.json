@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " GQ",
+    " DS",
+    "H  "
+  ],
+  "key": {
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "Q": {
+      "item": "minecraft:quartz"
+    },
+    "D": {
+      "item": "arcanecode:arcane_dust"
+    },
+    "S": {
+      "item": "arcanecode:spark_staff"
+    },
+    "H": {
+      "item": "minecraft:blaze_rod"
+    }
+  },
+  "result": {
+    "id": "arcanecode:resonance_staff",
+    "count": 1
+  }
+}

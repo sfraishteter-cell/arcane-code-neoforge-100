@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["NPN", "DCD", "NPN"],
+  "key": {
+    "N": {"item": "minecraft:netherite_scrap"},
+    "P": {"item": "arcanecode:focus_prism"},
+    "D": {"item": "arcanecode:arcane_dust"},
+    "C": {"item": "minecraft:conduit"}
+  },
+  "result": {"id": "arcanecode:woven_artifact", "count": 1}
+}
