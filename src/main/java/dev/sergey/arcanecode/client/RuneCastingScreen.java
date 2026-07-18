@@ -9,7 +9,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import net.neoforged.neoforge.client.network.ClientPacketDistributor;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -108,7 +108,7 @@ public final class RuneCastingScreen extends Screen {
 
     private void send(int action) {
         if (program.isEmpty()) { status = Component.literal("§cПрограмма пуста"); return; }
-        ClientPacketDistributor.sendToServer(new RuneProgramPayload(String.join(",", program), action));
+        PacketDistributor.sendToServer(new RuneProgramPayload(String.join(",", program), action));
         status = Component.literal(action == ArcaneNetwork.SAVE ? "§aОтправлено на сохранение" : "§aОтправлено на выполнение");
     }
 
